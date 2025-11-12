@@ -31,10 +31,10 @@ services:
         condition: service_healthy
     environment:
       TZ: ${TZ:-Europe/Budapest}
-      DB_HOST: db
-      DB_DATABASE: ${MYSQL_DATABASE}
-      DB_USERNAME: ${MYSQL_USER}
-      DB_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       APP_ENV: ${APP_ENV:-local}
     working_dir: /var/www/html
     volumes:

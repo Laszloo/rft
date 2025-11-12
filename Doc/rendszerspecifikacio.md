@@ -70,6 +70,10 @@ Az applikáció stackje:
 
 ### Architektúrális tervek
 #### Adatbázis terv
+![](rft_diagramm_db.png)
+
+- Fontos, hogy termék tényleges törlése nem lehet, legyen inkább del flag.
+- Ha a felhasználó törli a saját adatait a megrendeléseknek meg kell maradnia.
 
 #### Szoftver terv
 ##### Az alkalmazás rétegei

@@ -13,7 +13,8 @@ final class CreateBooksTable extends AbstractMigration
             $this->table('books')->drop()->save();
         }
 
-        $this->table('books')
+        $t = $this->table('books', ['id' => false, 'primary_key' => ['id']]);
+        $t->addColumn('id', 'integer', ['identity' => true, 'signed' => false])
             ->addColumn('title', 'string', ['limit' => 255])
             ->addColumn('author', 'string', ['limit' => 255])
             ->addColumn('published_year', 'integer', [
@@ -26,6 +27,7 @@ final class CreateBooksTable extends AbstractMigration
             ->addColumn('stock', 'integer', ['default' => 0])
             ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'datetime', ['null' => true, 'default' => null])
+            ->addColumn('deleted_at', 'datetime', ['null' => true, 'default' => null])
             ->create();
     }
 

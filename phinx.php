@@ -4,7 +4,7 @@ Dotenv\Dotenv::createImmutable(__DIR__)->safeLoad();
 
 $host = getenv('MYSQL_HOST');
 $db   = getenv('MYSQL_DATABASE');
-$user = getenv('MYSQL_USER');
+$user = getenv('MYSQL_USERNAME');
 $pass = getenv('MYSQL_PASSWORD');
 
 return [

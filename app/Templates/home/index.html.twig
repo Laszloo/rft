@@ -13,6 +13,15 @@
           <p class="card-subtitle text-muted mb-2">{{ b.author }}</p>
           <div class="mt-auto d-flex justify-content-between align-items-center">
             <strong>{{ b.price|number_format(2, '.', ' ') }} Ft</strong>
+            <div class="d-flex gap-2">
+                {% if b.stock > 0 %}
+                  <form method="post" action="/kosar/hozzaad/{{ b.id }}">
+                    <button class="btn btn-sm btn-primary">Kosárba</button>
+                  </form>
+                {% else %}
+                    <p>Jelenleg nincs raktáron</p>
+                {% endif %}
+            </div>
           </div>
         </div>
       </div>

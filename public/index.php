@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 use DI\Container;
 use Slim\Factory\AppFactory;
-use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -22,7 +21,11 @@ $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
 
-$twig = Twig::create(__DIR__ . '/../app/Templates', ['cache' => false]);
+$container->set(Slim\Views\Twig::class, fn() => Slim\Views\Twig::create(__DIR__ . '/../app/Templates', [
+    'cache' => false,
+]));
+
+$twig = $container->get(Slim\Views\Twig::class);
 $app->add(TwigMiddleware::create($app, $twig));
 
 

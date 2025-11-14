@@ -22,4 +22,12 @@ class HomeController
             'books' => $books,
         ]);
     }
+
+
+    public function notFound(Request $req, Response $res): Response
+    {
+        return Twig::fromRequest($req)->render($res, '404.html.twig', [
+            'title' => '404'
+        ]);
+    }
 }

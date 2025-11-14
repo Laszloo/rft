@@ -1,0 +1,85 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Rendelések - Admin{% endblock %}
+{% set active_menu = 'dashboard' %}
+{% block content_admin %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title my-2">Rendelések</h5>
+                </div>
+                <div class="card-body">
+                    {% if orders is empty %}
+                        <div class="alert alert-info">
+                            Jelenleg nincs egyetlen rendelés sem.
+                        </div>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover align-middle">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Rendelés azonosító</th>
+                                    <th>Vevő</th>
+                                    <th>Státusz</th>
+                                    <th>Összeg (bruttó)</th>
+                                    <th>Létrehozva</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>{{ order.order_id }}</td>
+                                        <td>
+                                            <strong>{{ order.order_number }}</strong>
+                                        </td>
+                                        <td>
+                                            {% if order.name %}
+                                                {{ order.name }}
+                                                {% if order.email %}
+                                                    <br><small class="text-muted">{{ order.email }}</small>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="text-muted fst-italic">Ismeretlen / törölt felhasználó</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% set status = order.status|lower %}
+                                            {% if status == 'folyamatban' %}
+                                                <span class="badge text-bg-secondary">Függőben</span>
+                                            {% elseif status == 'fizetve' %}
+                                                <span class="badge text-bg-success">Fizetve</span>
+                                            {% elseif status == 'szallitva' %}
+                                                <span class="badge text-bg-primary">Kiszállítva</span>
+                                            {% elseif status == 'teljesitve' %}
+                                                <span class="badge text-bg-success">Lezárva</span>
+                                            {% elseif status == 'torolve' %}
+                                                <span class="badge text-bg-danger">Törölve</span>
+                                            {% else %}
+                                                <span class="badge text-bg-light text-body">Ismeretlen</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ order.total_gross|number_format(0, ',', ' ') }} Ft
+                                        </td>
+                                        <td>
+                                            {{ order.created_at|date('Y-m-d H:i') }}
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="/admin/rendeles/{{ order.order_id }}" class="btn btn-sm btn-outline-primary">
+                                                Részletek
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

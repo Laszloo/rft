@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<h1 class="h4 mb-3">Bejelentkezés</h1>
+{% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+<form method="post" class="row g-3" action="/bejelentkezes">
+  <div class="col-12">
+    <label class="form-label">E-mail</label>
+    <input name="email" type="email" class="form-control" required>
+  </div>
+  <div class="col-12">
+    <label class="form-label">Jelszó</label>
+    <input name="password" type="password" class="form-control" required>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary">Belépés</button>
+  </div>
+  <pre>
+    Felhasználó: jelszó
+    admin@example.com: admin123
+    user@example.com: user123
+  </pre>
+</form>
+{% endblock %}

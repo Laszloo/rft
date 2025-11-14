@@ -14,7 +14,7 @@ class HomeController
 
     public function index(Request $req, Response $res): Response
     {
-        $stmt = $this->db->query("SELECT id, title, author, image_url, price FROM books ORDER BY id DESC");
+        $stmt = $this->db->query("SELECT id, title, author, image_url, price, stock FROM books ORDER BY id DESC");
         $books = $stmt->fetchAll();
 
         return Twig::fromRequest($req)->render($res, 'home/index.html.twig', [

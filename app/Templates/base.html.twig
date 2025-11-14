@@ -10,6 +10,15 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="/">RFT Könyvtár</a>
+    <div class="ms-auto d-flex gap-2">
+      <a class="btn btn-sm btn-outline-light" href="/kosar">Kosár</a>
+      {% if app.user is defined and app.user %}
+        <a class="btn btn-sm btn-warning" href="/kijelentkezes">Kilépés</a>
+        <span class="navbar-text text-white small">{{ app.user.name }}</span>
+      {% else %}
+        <a class="btn btn-sm btn-outline-light" href="/bejelentkezes">Belépés</a>
+      {% endif %}
+    </div>
   </div>
 </nav>
 <main class="container my-4">

@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<h1 class="h4 mb-3">Kosár</h1>
+<form method="post" action="/kosar/frissit">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle">
+      <thead class="table-light">
+        <tr><th></th><th>Cím</th><th>Szerző</th><th>Egységár</th><th>Mennyiség</th><th>Összeg</th><th></th></tr>
+      </thead>
+      <tbody>
+      {% for it in items %}
+        <tr>
+          <td>
+            {% if it.book.image_url %}
+                <img src="{{ it.book.image_url }}" style="object-fit: contain; height: 100px" class="card-img-top" alt="{{ b.title }}">
+            {% endif %}
+          </td>
+          <td>{{ it.book.title }}</td>
+          <td>{{ it.book.author }}</td>
+          <td>{{ it.book.price|number_format(2,'.',' ') }} Ft</td>
+          <td style="max-width:120px;"><input class="form-control form-control-sm" type="number" min="0" name="qty[{{ it.book.id }}]" value="{{ it.qty }}"></td>
+          <td>{{ it.sum|number_format(2,'.',' ') }} Ft</td>
+          <td><button class="btn btn-sm btn-outline-danger" name="remove[]" value="{{ it.book.id }}">Törlés</button></td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" class="text-center text-muted">Üres a kosár.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-between">
+    <strong>Végösszeg: {{ total|number_format(2,'.',' ') }} Ft</strong>
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-secondary" href="/">Vissza</a>
+      <a class="btn btn-success" href="/fizetes">Fizetés</a>
+      <button class="btn btn-primary">Mennyiségek mentése</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

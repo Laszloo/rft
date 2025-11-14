@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DemoController;
@@ -34,6 +35,8 @@ return function (App $app) {
     // Admin
     $app->group('/admin', function (RouteCollectorProxy $group){
         $group->get('', [DashboardController::class, 'index']);
+        $group->get('/rendeles/{id}', [OrdersController::class, 'index']);
+        $group->post('/rendeles/{id}', [OrdersController::class, 'index']);
     })
         ->add(new AdminMiddleware())
         ->add(new UserMiddleware());

@@ -72,7 +72,7 @@ class CartController
 
             $stmt = $this->db->prepare($sqlOrder);
             $transOk = $stmt->execute([
-                ':user_id'        => 1,
+                ':user_id'        => $_SESSION['user']['id'],
                 ':order_number'   => time(),
                 ':total_gross'    => $cart['total']
             ]);

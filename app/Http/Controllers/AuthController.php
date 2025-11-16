@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -8,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AuthController extends BaseController
 {
-
     public function login(Request $req, Response $res): Response
     {
         if ($req->getMethod() === 'POST') {
@@ -47,7 +47,7 @@ class AuthController extends BaseController
     public function logout(Request $req, Response $res): Response
     {
         unset($_SESSION['user']);
-        
+
         return $res->withHeader('Location', '/')->withStatus(302);
     }
 }

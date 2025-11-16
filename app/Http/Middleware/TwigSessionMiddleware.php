@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Middleware;
@@ -10,12 +11,16 @@ use Slim\Views\Twig;
 
 final class TwigSessionMiddleware implements MiddlewareInterface
 {
-    public function __construct(private Twig $twig) {}
+    public function __construct(private Twig $twig)
+    {
+    }
 
-    
+
     public function process($request, $handler): ResponseInterface
     {
-        if (session_status() === PHP_SESSION_NONE) session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
         $this->twig->getEnvironment()->addGlobal('app', $_SESSION);
         $this->twig->getEnvironment()->addGlobal('user', $_SESSION['user'] ?? null);
@@ -26,7 +31,8 @@ final class TwigSessionMiddleware implements MiddlewareInterface
     }
 
 
-    private function messageCheck(): void {
+    private function messageCheck(): void
+    {
         if (isset($_SESSION['messages'])) {
             $_SESSION['messages'] = $_SESSION['messages'] = array_filter(
                 $_SESSION['messages'],

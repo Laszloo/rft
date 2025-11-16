@@ -14,7 +14,6 @@ use Twig\Error\SyntaxError;
 
 class DemoController extends BaseController
 {
-
     /**
      * @throws SyntaxError
      * @throws RuntimeError
@@ -27,7 +26,7 @@ class DemoController extends BaseController
         return $this->render($res, 'demo.html.twig', [
             'title' => 'Demo',
             'hello' => 'Hello World!',
-            'books' => $books    
+            'books' => $books
         ]);
     }
 }

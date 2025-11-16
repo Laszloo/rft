@@ -19,7 +19,8 @@ abstract class BaseController
     public function __construct(
         protected Twig $twig,
         protected readonly PDO $db
-    ) {}
+    ) {
+    }
 
     /**
      * @template T of Repository
@@ -43,7 +44,7 @@ abstract class BaseController
         throw new InvalidArgumentException("Nem létező repository!");
     }
 
-    
+
     protected function addMessage(string $type, string $message): bool
     {
         if (array_key_exists($type, Application::MESSAGES_TYPES)) {

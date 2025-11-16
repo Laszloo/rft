@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace App\Database\Migrations;
+
 use Phinx\Migration\AbstractMigration;
 
 final class CreateOrdersTable extends AbstractMigration

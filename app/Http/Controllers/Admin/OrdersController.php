@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Config\Application;
@@ -13,7 +15,7 @@ class OrdersController extends BaseController
     public function index(Request $req, Response $res): Response
     {
         if ($req->getMethod() === 'POST') {
-            if($this->saveStatus($req)) {
+            if ($this->saveStatus($req)) {
                 return $res->withHeader('Location', '/admin/rendeles/34')->withStatus(302);
             }
         }
@@ -61,7 +63,7 @@ class OrdersController extends BaseController
         ]);
     }
 
-    
+
     private function saveStatus(Request $request): bool
     {
         $data = ($request->getParsedBody());

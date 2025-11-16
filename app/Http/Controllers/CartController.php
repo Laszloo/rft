@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -38,8 +39,7 @@ class CartController extends BaseController
             $q = max(0, (int)$q);
             if ($q === 0) {
                 unset($cart[$id]);
-            }
-            else {
+            } else {
                 $cart[$id] = $q;
             }
         }
@@ -127,7 +127,7 @@ class CartController extends BaseController
         return $_SESSION['cart'];
     }
 
-    
+
     private function resetCart(): void
     {
         $_SESSION['cart'] = [];
@@ -142,7 +142,8 @@ class CartController extends BaseController
 
         if ($cart) {
             $ids = implode(',', array_map('intval', array_keys($cart)));
-            $rows = $this->db->query("SELECT id, title, author, price, image_url FROM books WHERE id IN ($ids)")->fetchAll();
+            $rows = $this->db->query("SELECT id, title, author, price, image_url FROM books WHERE id IN ($ids)")
+                ->fetchAll();
             foreach ($rows as $row) {
                 $qty = $cart[$row['id']] ?? 0;
                 $sum = $qty * (float)$row['price'];

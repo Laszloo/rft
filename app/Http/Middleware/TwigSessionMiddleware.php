@@ -12,6 +12,7 @@ final class TwigSessionMiddleware implements MiddlewareInterface
 {
     public function __construct(private Twig $twig) {}
 
+    
     public function process($request, $handler): ResponseInterface
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -23,6 +24,7 @@ final class TwigSessionMiddleware implements MiddlewareInterface
 
         return $handler->handle($request);
     }
+
 
     private function messageCheck(): void {
         if (isset($_SESSION['messages'])) {

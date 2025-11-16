@@ -127,6 +127,7 @@ class CartController extends BaseController
         return $_SESSION['cart'];
     }
 
+    
     private function resetCart(): void
     {
         $_SESSION['cart'] = [];

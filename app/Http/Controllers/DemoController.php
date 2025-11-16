@@ -24,7 +24,6 @@ class DemoController extends BaseController
     {
         $books = $this->getRepository(BookRepository::class)->getBooks();
 
-
         return $this->render($res, 'demo.html.twig', [
             'title' => 'Demo',
             'hello' => 'Hello World!',

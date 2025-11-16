@@ -3,15 +3,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use PDO;
-use Slim\Views\Twig;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class CartController
+class CartController extends BaseController
 {
-    public function __construct(private PDO $db) {}
-
     public function add(Request $req, Response $res, array $args): Response
     {
         $id = (int)$args['id'];
@@ -25,7 +21,7 @@ class CartController
     {
         $cartData = $this->getCartFromDb();
 
-        return Twig::fromRequest($req)->render($res, 'cart/index.html.twig', [
+        return $this->render($res, 'cart/index.html.twig', [
             'title' => 'Kosár',
             'items' => $cartData['items'],
             'total' => $cartData['total'],
@@ -105,7 +101,7 @@ class CartController
             $transOk = $transOk && $this->db->commit();
             if ($transOk) {
                 $this->resetCart();
-                return Twig::fromRequest($req)->render($res, 'cart/checkout.html.twig', [
+                return $this->render($res, 'cart/checkout.html.twig', [
                     'title' => 'Fizetés (demo)',
                     'message' => 'Sikeres fizetés',
                     'orderId' => $orderId,
@@ -117,7 +113,7 @@ class CartController
             //log message kéne
         }
 
-        return Twig::fromRequest($req)->render($res, 'cart/checkout.html.twig', [
+        return $this->render($res, 'cart/checkout.html.twig', [
             'title' => 'Fizetés (demo)',
             'message' => 'Sikertelen fizetés'
         ]);

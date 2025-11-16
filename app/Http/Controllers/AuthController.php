@@ -3,14 +3,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use PDO;
-use Slim\Views\Twig;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class AuthController
+class AuthController extends BaseController
 {
-    public function __construct(private readonly PDO $db) {}
 
     public function login(Request $req, Response $res): Response
     {
@@ -35,13 +32,13 @@ class AuthController
                 return $res->withHeader('Location', $to)->withStatus(302);
             }
 
-            return Twig::fromRequest($req)->render($res, 'auth/login.html.twig', [
+            return $this->render($res, 'auth/login.html.twig', [
                 'title' => 'Bejelentkezés',
                 'error' => 'Hibás e-mail vagy jelszó.',
             ]);
         }
 
-        return Twig::fromRequest($req)->render($res, 'auth/login.html.twig', [
+        return $this->render($res, 'auth/login.html.twig', [
             'title' => 'Bejelentkezés',
         ]);
     }

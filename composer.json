@@ -32,7 +32,8 @@
         ],
         "migrate": "vendor/bin/phinx migrate -c phinx.php",
         "rollback": "vendor/bin/phinx rollback -c phinx.php -t 0",
-        "seed": "vendor/bin/phinx seed:run -c phinx.php"
+        "seed": "vendor/bin/phinx seed:run -c phinx.php",
+        "phpcs": "@php ./vendor/bin/phpcs --standard=PSR12 app public"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -41,6 +42,7 @@
         "optimize-autoloader": true
     },
     "require-dev": {
+        "squizlabs/php_codesniffer": "^4.0",
         "symfony/var-dumper": "^6.4"
     }
 }

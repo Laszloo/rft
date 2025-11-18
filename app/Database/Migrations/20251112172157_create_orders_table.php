@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace App\Database\Migrations;
+
 use Phinx\Migration\AbstractMigration;
 
 final class CreateOrdersTable extends AbstractMigration
@@ -17,7 +19,7 @@ final class CreateOrdersTable extends AbstractMigration
             ->addColumn('user_id', 'integer', ['signed' => false])
             ->addColumn('order_number', 'string', ['limit' => 32])
             ->addColumn('status', 'enum', [
-                'values'  => ['folyamatban', 'fizetve', 'szallitva', 'teljesitve', 'torolve'],
+                'values'  => array_keys(\App\Config\Application::STATUS),
                 'default' => 'folyamatban',
             ])
             ->addColumn('total_gross', 'decimal', ['precision' => 10, 'scale' => 2, 'default' => 0])

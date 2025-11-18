@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -33,7 +34,7 @@ return function (App $app) {
     $app->get('/kijelentkezes', [AuthController::class, 'logout']);
 
     // Admin
-    $app->group('/admin', function (RouteCollectorProxy $group){
+    $app->group('/admin', function (RouteCollectorProxy $group) {
         $group->get('', [DashboardController::class, 'index']);
         $group->get('/rendeles/{id}', [OrdersController::class, 'index']);
         $group->post('/rendeles/{id}', [OrdersController::class, 'index']);

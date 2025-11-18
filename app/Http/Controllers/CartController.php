@@ -1,17 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use PDO;
-use Slim\Views\Twig;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class CartController
+class CartController extends BaseController
 {
-    public function __construct(private PDO $db) {}
-
     public function add(Request $req, Response $res, array $args): Response
     {
         $id = (int)$args['id'];
@@ -25,7 +22,7 @@ class CartController
     {
         $cartData = $this->getCartFromDb();
 
-        return Twig::fromRequest($req)->render($res, 'cart/index.html.twig', [
+        return $this->render($res, 'cart/index.html.twig', [
             'title' => 'Kosár',
             'items' => $cartData['items'],
             'total' => $cartData['total'],
@@ -42,8 +39,7 @@ class CartController
             $q = max(0, (int)$q);
             if ($q === 0) {
                 unset($cart[$id]);
-            }
-            else {
+            } else {
                 $cart[$id] = $q;
             }
         }
@@ -105,7 +101,7 @@ class CartController
             $transOk = $transOk && $this->db->commit();
             if ($transOk) {
                 $this->resetCart();
-                return Twig::fromRequest($req)->render($res, 'cart/checkout.html.twig', [
+                return $this->render($res, 'cart/checkout.html.twig', [
                     'title' => 'Fizetés (demo)',
                     'message' => 'Sikeres fizetés',
                     'orderId' => $orderId,
@@ -117,7 +113,7 @@ class CartController
             //log message kéne
         }
 
-        return Twig::fromRequest($req)->render($res, 'cart/checkout.html.twig', [
+        return $this->render($res, 'cart/checkout.html.twig', [
             'title' => 'Fizetés (demo)',
             'message' => 'Sikertelen fizetés'
         ]);
@@ -130,6 +126,7 @@ class CartController
 
         return $_SESSION['cart'];
     }
+
 
     private function resetCart(): void
     {
@@ -145,7 +142,8 @@ class CartController
 
         if ($cart) {
             $ids = implode(',', array_map('intval', array_keys($cart)));
-            $rows = $this->db->query("SELECT id, title, author, price, image_url FROM books WHERE id IN ($ids)")->fetchAll();
+            $rows = $this->db->query("SELECT id, title, author, price, image_url FROM books WHERE id IN ($ids)")
+                ->fetchAll();
             foreach ($rows as $row) {
                 $qty = $cart[$row['id']] ?? 0;
                 $sum = $qty * (float)$row['price'];

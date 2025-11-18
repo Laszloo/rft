@@ -9,8 +9,12 @@ $pass = getenv('MYSQL_PASSWORD');
 
 return [
     'paths' => [
-        'migrations' => 'app/Database/migrations',
-        'seeds'      => 'app/Database/seeds',
+        'migrations' => [
+            App\Database\Migrations::class => 'app/Database/migrations',
+        ],
+        'seeds' => [
+            App\Database\Seeds::class => 'app/Database/seeds',
+        ],
     ],
     'environments' => [
         'default_migration_table' => 'phinxlog',

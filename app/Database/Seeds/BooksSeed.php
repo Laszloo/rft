@@ -1,5 +1,8 @@
 <?php
+
 declare(strict_types=1);
+
+namespace App\Database\Seeds;
 
 use Phinx\Seed\AbstractSeed;
 
@@ -8,7 +11,7 @@ final class BooksSeed extends AbstractSeed
     public function run(): void
     {
         $books = [
-             [
+            [
                 'title' => 'A Gyűrű Szövetsége',
                 'author' => 'J. R. R. Tolkien',
                 'published_year' => 1954,
@@ -17,8 +20,7 @@ final class BooksSeed extends AbstractSeed
                 'price' => 5990,
                 'stock' => 10,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'A Két Torony',
                 'author' => 'J. R. R. Tolkien',
                 'published_year' => 1954,
@@ -27,18 +29,17 @@ final class BooksSeed extends AbstractSeed
                 'price' => 5990,
                 'stock' => 10,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'A Király Visszatér',
                 'author' => 'J. R. R. Tolkien',
                 'published_year' => 1955,
                 'isbn' => '9789630790881',
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 'image_url' => 'https://media.regikonyvek.hu/media/1734128/conversions/a-gyuruk-ura-iii-a-kiraly-visszater_inncvjjx-jpg.jpg',
                 'price' => 5990,
                 'stock' => 8,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'A Hobbit',
                 'author' => 'J. R. R. Tolkien',
                 'published_year' => 1937,
@@ -58,8 +59,7 @@ final class BooksSeed extends AbstractSeed
                 'price' => 4990,
                 'stock' => 15,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'Harry Potter és a titkok kamrája',
                 'author' => 'J. K. Rowling',
                 'published_year' => 1998,
@@ -68,8 +68,7 @@ final class BooksSeed extends AbstractSeed
                 'price' => 4990,
                 'stock' => 14,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'Harry Potter és az azkabani fogoly',
                 'author' => 'J. K. Rowling',
                 'published_year' => 1999,
@@ -78,8 +77,7 @@ final class BooksSeed extends AbstractSeed
                 'price' => 5490,
                 'stock' => 13,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'Harry Potter és a Tűz Serlege',
                 'author' => 'J. K. Rowling',
                 'published_year' => 2000,
@@ -88,8 +86,7 @@ final class BooksSeed extends AbstractSeed
                 'price' => 5990,
                 'stock' => 12,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'Harry Potter és a Főnix Rendje',
                 'author' => 'J. K. Rowling',
                 'published_year' => 2003,
@@ -98,8 +95,7 @@ final class BooksSeed extends AbstractSeed
                 'price' => 6490,
                 'stock' => 11,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'Harry Potter és a Félvér Herceg',
                 'author' => 'J. K. Rowling',
                 'published_year' => 2005,
@@ -108,8 +104,7 @@ final class BooksSeed extends AbstractSeed
                 'price' => 6490,
                 'stock' => 10,
                 'created_at' => date('Y-m-d H:i:s'),
-            ],
-            [
+            ], [
                 'title' => 'Harry Potter és a Halál Ereklyéi',
                 'author' => 'J. K. Rowling',
                 'published_year' => 2007,

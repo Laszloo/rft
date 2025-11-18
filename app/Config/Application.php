@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Config;
 
 final class Application
@@ -26,4 +28,12 @@ final class Application
             'badge' => 'danger',
         ],
     ];
+
+    public const MESSAGES_TYPES = [
+        'success' => 'success',
+        'warning' => 'warning',
+        'error' => 'danger',
+    ];
+
+    public const MESSAGES_SHOW_TIME = 2;
 }

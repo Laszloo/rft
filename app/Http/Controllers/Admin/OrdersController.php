@@ -1,55 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Config\Application;
-use PDO;
+use App\Http\Controllers\BaseController;
+use App\Repository\OrderRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 
-class OrdersController
+class OrdersController extends BaseController
 {
-    public function __construct(private readonly PDO $db) {}
     public function index(Request $req, Response $res): Response
     {
         if ($req->getMethod() === 'POST') {
-            $this->saveStatus($req);
+            if ($this->saveStatus($req)) {
+                return $res->withHeader('Location', '/admin/rendeles/34')->withStatus(302);
+            }
         }
-        
-        $stmt = $this->db->prepare(<<<SQL
-            SELECT
-                o.id           AS order_id,
-                o.order_number,
-                o.status,
-                o.total_gross,
-                o.created_at,
-            
-                u.id           AS user_id,
-                u.name,
-                u.email,
-            
-                oi.id          AS order_item_id,
-                oi.qty,
-                oi.unit_price,
-                oi.line_total,
-            
-                b.id           AS book_id,
-                b.title,
-                b.author,
-                b.image_url
-            FROM orders AS o
-            LEFT JOIN users        AS u  ON o.user_id = u.id
-            LEFT JOIN order_items  AS oi ON oi.order_id = o.id
-            LEFT JOIN books        AS b  ON b.id = oi.book_id
-            WHERE o.id = ?
-            ORDER BY o.created_at DESC, oi.id ASC;
 
-        SQL);
-        $stmt->execute([ $req->getAttribute('id')]);
-        $rows = $stmt->fetchAll();
+        $orderRows = $this->getRepository(OrderRepository::class)
+            ->getOrderDetails($req->getAttribute('id'));
 
-        $first = $rows[0];
+        $first = $orderRows[0];
         $order = [
             'order_id' => (int)$first['order_id'],
             'order_number' => $first['order_number'],
@@ -61,7 +35,7 @@ class OrdersController
             'email' => $first['email'],
         ];
 
-        $itemRows = array_filter($rows, fn (array $row) => $row['order_item_id'] !== null);
+        $itemRows = array_filter($orderRows, fn (array $row) => $row['order_item_id'] !== null);
         $orderItems = array_map(
             fn (array $row) => [
                 'order_item' => [
@@ -81,13 +55,14 @@ class OrdersController
             $itemRows
         );
 
-        return Twig::fromRequest($req)->render($res, '/admin/order.html.twig', [
+        return $this->render($res, '/admin/order.html.twig', [
             'title' => 'Megrendelések',
             'order' => $order,
             'order_items' => $orderItems,
             'status' => Application::STATUS,
         ]);
     }
+
 
     private function saveStatus(Request $request): bool
     {
@@ -104,14 +79,15 @@ class OrdersController
             ]);
 
             if ($transOk) {
-                $_SESSION["message"][] = "Sikeres mentés!";
+                $this->addSessionMessage('success', 'Sikeres mentés!');
+
                 return true;
             }
-            $_SESSION["message"][] = "Hiba a mentés során!";
+            $this->addSessionMessage('error', 'Sikertelen mentés!');
             //logolni kellene
             return false;
         }
-        $_SESSION["message"][] = "Nem létező státusz!";
+        $this->addSessionMessage('error', 'Nem létező státusz!');
         //logolni kellene
 
         return false;
